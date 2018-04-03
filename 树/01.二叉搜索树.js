@@ -70,6 +70,59 @@ function BinarySearchTree() {
     }
     return null;
   };
+  
+  // 搜索特定值的私有方法
+  let searchNode = (node, key) => {
+    if (node === null) {
+      return false;
+    }
+    if (key < node.key) {
+      return searchNode(node.left, key);
+    } else if (key > node.key) {
+      return searchNode(node.right, key);
+    } else {
+      return true;
+    }
+  };
+  
+  // 找到最小的节点
+  let findMinNode = (node) => {
+    while (node && node.left !== null) {
+      node = node.left;
+    }
+    return node;
+  };
+
+  // 移除节点的私有方法
+  let removeNode = (node, key) => {
+    if (node === null) {
+      return null;
+    }
+    if (key < node.key) {
+      node.left = removeNode(node.left, key);
+      return node;
+    } else if (key > node.key) {
+      node.right = removeNode(node.right, key);
+      return node;
+    } else {
+      if (node.left === null && node.right === null) {
+        node = null;
+        return node;
+      }
+      if (node.left === null) {
+        node = node.right
+        return node
+      } else if (node.right === null) {
+        node = node.left;
+        return node;
+      }
+
+      let aux = findMinNode(node.right);
+      node.key = aux.key;
+      node.right = removeNode(node.right, aux.key);
+      return node;
+    }
+  };
 
   // 向树中插入一个新的值
   this.insert = (key) => {
@@ -99,6 +152,14 @@ function BinarySearchTree() {
   // 搜索树中的最大值
   this.max = () => {
     return maxNode(root);
+  };
+  // 搜索一个特定的值
+  this.search = (key) => {
+    return searchNode(root, key);
+  };
+  // 移除一个节点
+  this.remove = (key) => {
+    root = removeNode(root, key);
   }
 }
 
@@ -123,6 +184,21 @@ let printNode = (value) => {
   console.log(value);
 };
 
+// 输出原始的树
+console.log(`--------------------`);
+console.log(tree.preOrderTraverseNode(printNode));
+
+console.log(`--------------------`);
 tree.postOrderTraverse(printNode);
 console.log(`tree\'s min is ${tree.min()}`);
 console.log(`tree\'s max is ${tree.max()}`);
+
+// 测试搜索特定的值
+console.log(`--------------------`);
+console.log(tree.search(1) ? `key 1 found.` : `key 1 not found.`);
+console.log(tree.search(8) ? `key 8 found.` : `key 8 not found.`);
+
+// 测试删除值
+console.log(`--------------------`);
+tree.remove(15);
+console.log(tree.preOrderTraverseNode(printNode));
