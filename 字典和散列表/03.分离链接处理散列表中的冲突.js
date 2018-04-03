@@ -80,6 +80,7 @@ function HashTasble() {
   }
 }
 
+// 链表类 - 需要借助链表类实现分离链接功能
 function LinkedList() {
   let Node = function (element) {
     this.element = element;
