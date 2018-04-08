@@ -57,7 +57,7 @@ class sortArrayList extends arrayList {
   }
 }
 
-let arrayInstance = createNonSortedArray(sortArrayList, 9);
+let arrayInstance = createNonSortedArray(sortArrayList, 8);
 console.log(arrayInstance.toString());
 arrayInstance.mergeSort();
 console.log(arrayInstance.toString());
