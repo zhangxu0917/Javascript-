@@ -18,7 +18,7 @@ class sortArrayList extends arrayList {
     let length = this.array.length;
     let indexMin;
 
-    for (let i = 0; i < length; i++) {
+    for (let i = 0; i < length-1; i++) {
       indexMin = i;
       for (let j = i; j < length; j++) {
         if (this.array[indexMin] > this.array[j]) {
