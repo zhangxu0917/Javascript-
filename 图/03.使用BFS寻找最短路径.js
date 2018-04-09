@@ -10,13 +10,18 @@ let {
   printNode
 } = require('./util');
 
-
 class SearchGraph extends Graph {
-  bfs(v, callback) {
-    let color = initializeColor(this.vertices);
-    let queue = new Queue();
+  BFS(v) {
+    let color = initializeColor(this.vertices),
+      queue = new Queue(),
+      d = [],
+      pred = [];
     queue.enqueue(v);
 
+    for (let i = 0; i < this.vertices.length; i++) {
+      d[this.vertices[i]] = 0;
+      pred[this.vertices[i]] = null;
+    }
     while (!queue.isEmpty()) {
       let u = queue.dequeue();
       let neighbors = this.adjList.get(u);
@@ -25,6 +30,8 @@ class SearchGraph extends Graph {
         let w = neighbors[i];
         if (color[w] === 'white') {
           color[w] = 'grey';
+          d[w] = d[u] + 1;
+          pred[w] = u;
           queue.enqueue(w);
         }
       }
@@ -32,6 +39,10 @@ class SearchGraph extends Graph {
       if (callback) {
         callback(u);
       }
+    }
+    return {
+      distances: d,
+      predecessors: pred
     }
   }
 }
@@ -52,4 +63,5 @@ graph.addEdge('B', 'E');
 graph.addEdge('B', 'F');
 graph.addEdge('E', 'I');
 
-graph.bfs(myVertices[0], printNode);
+let shortestPathA = graph.BFS(myVertices[0]);
+console.log(shortestPathA);
