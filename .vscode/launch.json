@@ -8,7 +8,7 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Program",
-      "program": "${workspaceFolder}/排序和搜索算法/07.快速排序.js"
+      "program": "${workspaceFolder}/排序和搜索算法/08.堆排序.js"
     }
   ]
 }
